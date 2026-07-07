@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#1e3a8a">
+    
+    <!-- Primary Meta Tags for SEO #1 Ranking -->
+    <title>TheTaskBridges | Elite Virtual Assistants & Custom AI Solutions</title>
+    <meta name="title" content="TheTaskBridges | Elite Virtual Assistants, AI Solutions & Remote Jobs">
+    <meta name="description" content="Scale your business globally with TheTaskBridges. We merge elite Virtual Assistants with cutting-edge AI workflow automation to create unmatched business efficiency.">
+    <meta name="keywords" content="Virtual Assistant, AI solutions, remote jobs, AI workflow automation agency, hire virtual assistants online, human and AI collaboration, business automation, TheTaskBridges, executive support, AI displaced jobs, human-in-the-loop AI">
+    <meta name="author" content="TheTaskBridges">
+    
+    <!-- Advanced Bot & AI Crawler Directives -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://www.thetaskbridges.com/">
+    
+    <!-- AI Agent & WebMCP Readiness (Emerging Standards) -->
+    <link rel="alternate" type="text/markdown" href="/index.md" title="TheTaskBridges Markdown for LLMs">
+    <link rel="help" href="/llms.txt" title="AI Agent instructions">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.thetaskbridges.com/">
+    <meta property="og:title" content="TheTaskBridges | AI, Virtual Assistants & Remote Jobs">
+    <meta property="og:description" content="Merging AI and human knowledge to create Super Brains. Hire elite Virtual Assistants and automate your business today.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:site_name" content="TheTaskBridges">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="TheTaskBridges | AI & Virtual Assistance">
+    <meta property="twitter:description" content="Merging AI and human knowledge to create Super Brains. Elite Virtual Assistants and AI workflow integrations.">
+    
+    <!-- Performance & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Advanced Schema.org Markup for Google Knowledge Graph & AI Parsing -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Corporation",
+          "@id": "https://www.thetaskbridges.com/#organization",
+          "name": "TheTaskBridges",
+          "slogan": "God help us employ one more.",
+          "url": "https://www.thetaskbridges.com",
+          "logo": "https://www.thetaskbridges.com/logo.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+233-55-525-2585",
+            "contactType": "customer support",
+            "email": "sa3150402@gmail.com",
+            "areaServed": "Global",
+            "availableLanguage": "English"
+          },
+          "description": "TheTaskBridges is a premier business automation agency merging human Virtual Assistants with cutting-edge AI technologies. We upskill workers displaced by AI to create highly efficient 'Super Brains' for global businesses.",
+          "knowsAbout": ["Virtual Assistance", "AI Workflow Automation", "Human-in-the-loop AI", "Remote Job Creation", "Business Efficiency"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.thetaskbridges.com/#website",
+          "url": "https://www.thetaskbridges.com",
+          "name": "TheTaskBridges",
+          "publisher": {"@id": "https://www.thetaskbridges.com/#organization"}
+        },
+        {
+          "@type": "Service",
+          "name": "Elite Virtual Assistance",
+          "provider": {"@id": "https://www.thetaskbridges.com/#organization"}
+        },
+        {
+          "@type": "Service",
+          "name": "AI Automations",
+          "provider": {"@id": "https://www.thetaskbridges.com/#organization"}
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+        
+        /* Attention arrow (bottom-right) */
+        .attention-arrow{
+            position:fixed;
+            right:20px;
+            bottom:90px;
+            width:64px;
+            height:64px;
+            z-index:9999;
+            pointer-events:none;
+            transform:rotate(90deg);
+            transform-origin:center;
+        }
+        /* Vibrant orange (#f97316) */
+        .attention-arrow svg{width:100%;height:100%;fill:#f97316;filter:drop-shadow(0 8px 18px rgba(249,115,22,0.45));}
+        @keyframes blinkPulse{0%,20%{opacity:.35}50%{opacity:1}100%{opacity:.35}}
+        @keyframes scalePulse{0%,100%{transform:rotate(90deg) scale(1)}50%{transform:rotate(90deg) scale(1.22)}}
+        .attention-arrow{animation:blinkPulse 1.4s ease-in-out infinite, scalePulse 1.4s ease-in-out infinite}
+
+        /* label above arrow */
+        .attention-label{
+            position:fixed;
+            right:12px;
+            bottom:165px;
+            z-index:10000;
+            background:#f97316;
+            color:#fff;
+            font-weight:700;
+            padding:8px 14px;
+            border-radius:9999px;
+            box-shadow:0 10px 22px rgba(249,115,22,0.35);
+            font-size:13px;
+            letter-spacing:0.4px;
+            text-transform:uppercase;
+            pointer-events:none;
+            transform-origin:center;
+            animation:fadeUp 1.6s ease-in-out infinite;
+        }
+        @keyframes fadeUp{0%{opacity:.6;transform:translateY(0)}50%{opacity:1;transform:translateY(-6px)}100%{opacity:.6;transform:translateY(0)}}
+
+        /* Custom animation for background blobs */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+        
+        /* Utilities for Glassmorphism Support */
+        .glass-nav {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="glass-nav shadow-sm sticky top-0 z-50 transition-all duration-300 relative" aria-label="Main Navigation" data-ai-element="navigation">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-700 tracking-tight" aria-label="TheTaskBridges Homepage">TheTask<span class="text-gray-900">Bridges</span></a>
+            <div class="hidden md:flex space-x-8 font-semibold text-gray-700">
+                <a href="index.html" class="hover:text-blue-600 transition" aria-label="Home">Home</a>
+                <a href="#about" class="hover:text-blue-600 transition" aria-label="About Us">About</a>
+                <a href="#services" class="hover:text-blue-600 transition" aria-label="Our Services">Services</a>
+                <a href="#tools" class="hover:text-blue-600 transition" aria-label="Our AI Tools">Tools</a>
+                <a href="contact.html" class="hover:text-blue-600 transition" aria-label="Contact Us">Contact Us</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden text-blue-700 text-2xl cursor-pointer" aria-label="Open Mobile Menu" role="button" tabindex="0">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white border-b border-gray-200 py-4 px-6 flex flex-col space-y-4 font-semibold text-gray-700 shadow-lg md:hidden">
+            <a href="index.html" class="hover:text-blue-600 transition">Home</a>
+            <a href="#about" class="hover:text-blue-600 transition">About</a>
+            <a href="#services" class="hover:text-blue-600 transition">Services</a>
+            <a href="#tools" class="hover:text-blue-600 transition">Tools</a>
+            <a href="contact.html" class="hover:text-blue-600 transition">Contact Us</a>
+        </div>
+    </nav>
+
+    <main role="main" itemscope itemtype="https://schema.org/WebPage">
+        <!-- Hero Section -->
+        <header class="gradient-bg text-white py-24 px-6 relative overflow-hidden" data-ai-section="hero">
+            <div class="container mx-auto text-center relative z-10">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight">Scale Your Business with AI & Elite Virtual Assistants</h1>
+                <p class="text-xl md:text-2xl mb-10 opacity-95 max-w-3xl mx-auto font-light">Future-proof your company. We provide dedicated Virtual Assistants, cutting-edge AI workflow integrations, and premium remote job placements.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="mailto:sa3150402@gmail.com" rel="noopener" class="bg-white text-blue-700 font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-gray-100 transition focus:outline-none focus:ring-4 focus:ring-blue-300" data-action="contact-email">Send Us A Message</a>
+                    <a href="#services" class="border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-blue-700 transition focus:outline-none focus:ring-4 focus:ring-white">Explore Solutions</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- SEO-Optimized ABOUT US Section -->
+        <section id="about" class="py-24 relative overflow-hidden bg-blue-50" aria-labelledby="about-heading" data-ai-section="about-us" itemscope itemtype="https://schema.org/AboutPage">
+            <!-- Background Decorative Elements -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+                <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+                <div class="absolute top-48 right-12 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center gap-16">
+                    
+                    <!-- Text Content -->
+                    <div class="w-full lg:w-1/2">
+                        <div class="inline-block px-4 py-2 bg-blue-100 text-blue-700 font-bold rounded-full text-sm uppercase tracking-widest mb-4">Our Philosophy</div>
+                        <h2 id="about-heading" class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                            Merging Human Expertise with Artificial Intelligence.
+                        </h2>
+                        
+                        <div class="space-y-5 text-lg text-gray-700 leading-relaxed" itemprop="mainContentOfPage">
+                            <p>
+                                At <strong>TheTaskBridges</strong>, we are more than just a leading AI automation agency. We believe that technology should empower humanity, not replace it. By merging deep <strong>Human Knowledge</strong> with powerful <strong>AI Automations</strong>, we engineer what we call <strong><span class="text-blue-700 font-bold">"Super Brains."</span></strong>
+                            </p>
+                            <p>
+                                This powerful synergy allows human workers to achieve unprecedented levels of efficiency, scale operations flawlessly, and be vastly more effective in what they do. We provide businesses worldwide with elite <strong>Virtual Assistance</strong> and bespoke AI workflow integrations.
+                            </p>
+                            <p class="pt-4 font-semibold text-gray-900 border-l-4 border-blue-500 pl-4">
+                                While others use AI to eliminate jobs, we use it to create them. We actively recruit, upskill, and hire individuals—especially those who have lost their jobs to AI—transforming them into highly-paid, AI-augmented professionals.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Glassmorphic Mission Card -->
+                    <div class="w-full lg:w-1/2 flex justify-center">
+                        <div class="glass-card-light rounded-3xl p-10 md:p-14 w-full max-w-lg text-center relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+                            
+                            <i class="fas fa-hands-holding-circle text-5xl text-blue-600 mb-6"></i>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Our Driving Mission</h3>
+                            <p class="text-gray-600 mb-8 italic">To be the global bridge between cutting-edge technology and human livelihood.</p>
+                            
+                            <div class="bg-gray-900 text-white rounded-2xl p-6 shadow-xl transform transition hover:scale-105 duration-300">
+                                <p class="text-sm text-gray-400 uppercase tracking-widest font-bold mb-2">Our Official Slogan</p>
+                                <blockquote class="text-2xl md:text-3xl font-bold font-serif text-blue-400" itemprop="abstract">
+                                    "God help us employ one more."
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20 container mx-auto px-6" data-ai-section="services">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Our Core Business Solutions</h2>
+                <p class="text-gray-600 mt-4 text-lg">Integrated digital solutions designed for modern enterprise growth and efficiency.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Virtual Assistance -->
+                <article class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center" itemscope itemtype="https://schema.org/Service">
+                    <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user-tie text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-900" itemprop="name">Elite Virtual Assistance</h3>
+                    <p class="text-gray-600 mb-6" itemprop="description">Executive support, inbox management, and critical administrative tasks handled by top-tier, vetted professionals.</p>
+                    <ul class="text-sm text-gray-500 space-y-3 mb-6 text-left mx-auto max-w-fit">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Calendar & Email Management</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>B2B Customer Support</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Data Entry & CRM Optimization</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Content Creation & Management,Bookkeeping,Graphic design ,
+                            Web Development or Design and all the virtual services you can think about</li>
+                    </ul>
+                </article>
+
+                <!-- AI Solutions -->
+                <article id="ai-solutions" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center border-t-4 border-t-blue-600" itemscope itemtype="https://schema.org/Service">
+                    <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-robot text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-900" itemprop="name">AI Automations</h3>
+                    <p class="text-gray-600 mb-6" itemprop="description">Custom LLM implementations, seamless workflow automation, and conversational AI chatbots to drastically reduce operational costs.</p>
+                    <ul class="text-sm text-gray-500 space-y-3 mb-6 text-left mx-auto max-w-fit">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Custom Support Chatbots</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Zapier/Make Automations</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Predictive Data Analytics</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>AI Workflow Automation</li>
+                    </ul>
+                </article>
+
+                <!-- Jobs -->
+                <article id="jobs" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center" itemscope itemtype="https://schema.org/Service">
+                    <div class="w-16 h-16 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-briefcase text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-900" itemprop="name">Remote Job Placement</h3>
+                    <p class="text-gray-600 mb-6" itemprop="description">Connecting top-tier global talent with rewarding remote roles in virtual assistance, tech, and AI systems management.</p>
+                    <ul class="text-sm text-gray-500 space-y-3 mb-6 text-left mx-auto max-w-fit">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Exclusive Remote Roles</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Rapid Career Development</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Flexible Global Scheduling</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>AI Training and Development for Businesses</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Glassmorphic Tools Section -->
+        <section id="tools" class="relative py-24 bg-slate-900 overflow-hidden" data-ai-section="ai-tools">
+            <!-- Animated Background Blobs for Glass Effect -->
+            <div class="absolute top-0 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-blob" aria-hidden="true"></div>
+            <div class="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-blob animation-delay-2000" aria-hidden="true"></div>
+            <div class="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-blob animation-delay-4000" aria-hidden="true"></div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 text-white">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight">Our Proprietary AI Toolset</h2>
+                    <p class="text-gray-300 max-w-2xl mx-auto text-lg">Access our suite of next-generation digital tools built with a modern interface for seamless AI workflow integrations and analytics.</p>
+                </div>
+
+                <!-- Glassmorphic Grid (Mobile Responsive) -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Tool Card 1: AI Copywriter -->
+                    <article class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] hover:bg-white/20 hover:-translate-y-2 transition-all duration-300 group" itemscope itemtype="https://schema.org/SoftwareApplication">
+                        <meta itemprop="applicationCategory" content="BusinessApplication">
+                        <div class="w-14 h-14 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-500/50 transition duration-300">
+                            <i class="fas fa-pen-nib text-2xl text-blue-300 group-hover:text-white transition" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3" itemprop="name">AI Copywriter</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed" itemprop="description">Generate high-converting marketing copy, professional corporate emails, and engaging social content in seconds with our advanced AI writing engine.</p>
+                        <a href="copywriter.html" aria-label="Launch AI Copywriter Tool" class="inline-flex items-center text-blue-400 hover:text-blue-300 text-sm font-semibold transition" itemprop="url">
+                            Coming Soon <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition" aria-hidden="true"></i>
+                        </a>
+                    </article>
+
+                    <!-- Tool Card 2: Financial Statement Analyser -->
+                    <article class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] hover:bg-white/20 hover:-translate-y-2 transition-all duration-300 group" itemscope itemtype="https://schema.org/SoftwareApplication">
+                        <meta itemprop="applicationCategory" content="FinanceApplication">
+                        <div class="w-14 h-14 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-500/50 transition duration-300">
+                            <i class="fas fa-file-invoice-dollar text-2xl text-purple-300 group-hover:text-white transition" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3" itemprop="name">Financial Statement Analyser</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed" itemprop="description">Securely upload your balance sheets and income statements. Our AI instantly extracts key metrics, identifies trends, and provides actionable financial summaries.</p>
+                        <a href="#" aria-label="Launch Financial Analyser Tool" class="inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-semibold transition" itemprop="url">
+                            Coming Soon <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition" aria-hidden="true"></i>
+                        </a>
+                    </article>
+
+                    <!-- Tool Card 3: AI Humaniser -->
+                    <article class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] hover:bg-white/20 hover:-translate-y-2 transition-all duration-300 group" itemscope itemtype="https://schema.org/SoftwareApplication">
+                        <meta itemprop="applicationCategory" content="UtilitiesApplication">
+                        <div class="w-14 h-14 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-green-500/50 transition duration-300">
+                            <i class="fas fa-user-check text-2xl text-green-300 group-hover:text-white transition" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3" itemprop="name">AI Humaniser</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed" itemprop="description">Seamlessly convert stiff, robotic AI-generated text into natural, engaging, and empathetic human-like content that easily bypasses modern AI detectors.</p>
+                        <a href="humaniser.html" aria-label="Launch AI Humaniser Tool" class="inline-flex items-center text-green-400 hover:text-green-300 text-sm font-semibold transition" itemprop="url">
+                            Launch Tool <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition" aria-hidden="true"></i>
+                        </a>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Attention label + arrow pointing vertically down to widget (Bottom Right) -->
+    <div class="attention-label" aria-hidden="true">Contact us now</div>
+    <div class="attention-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2 L22 12 L12 22 L10.6 20.6 L18.2 13 H2 V11 H18.2 L10.6 3.4 Z" />
+        </svg>
+    </div>
+
+    <!-- Expanded Footer with Contact Info -->
+    <footer id="footer-contact" class="bg-gray-900 text-white pt-16 pb-8 mt-auto" role="contentinfo" itemscope itemtype="https://schema.org/Organization">
+        <meta itemprop="name" content="TheTaskBridges">
+        <div class="container mx-auto px-6">
+            <!-- Footer Top Row -->
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 border-b border-gray-800 pb-10 mb-8">
+                
+                <!-- Brand Info -->
+                <div class="text-center md:text-left">
+                    <a href="index.html" class="text-2xl font-bold text-blue-500 mb-4 inline-block tracking-tight">TheTask<span class="text-white">Bridges</span></a>
+                    <p class="opacity-70 max-w-sm mx-auto md:mx-0 leading-relaxed font-light">Empowering your business globally with elite Virtual Assistance, custom AI workflow integrations, and rewarding remote job opportunities.</p>
+                </div>
+                
+                <!-- Contact Info -->
+                <address class="text-center md:text-right not-italic">
+                    <h4 class="text-lg font-bold mb-4 text-white uppercase tracking-wider">Contact Info</h4>
+                    <div class="space-y-3 opacity-80 font-light">
+                        <a href="mailto:sa3150402@gmail.com" class="flex items-center justify-center md:justify-end hover:text-blue-400 transition" itemprop="email">
+                            <i class="fas fa-envelope mr-3 text-blue-500 text-lg" aria-hidden="true"></i> sa3150402@gmail.com
+                        </a>
+                        <a href="tel:+233555252585" class="flex items-center justify-center md:justify-end hover:text-blue-400 transition" itemprop="telephone">
+                            <i class="fas fa-phone mr-3 text-blue-500 text-lg" aria-hidden="true"></i> +233 555 252 585
+                        </a>
+                        <a href="tel:+233556921087" class="flex items-center justify-center md:justify-end hover:text-blue-400 transition" itemprop="telephone">
+                            <i class="fas fa-phone mr-3 text-blue-500 text-lg" aria-hidden="true"></i> +233 556 921 087
+                        </a>
+                    </div>
+                </address>
+
+            </div>
+            
+            <!-- Footer Bottom Row -->
+            <div class="text-center">
+                <p class="opacity-50 text-sm font-light">&copy; <span itemprop="foundingDate">2026</span> TheTaskBridges. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Elfsight Floating Widget Script -->
+    <script src="https://elfsightcdn.com/platform.js" async defer></script>
+    <div class="elfsight-app-831371db-1fc3-4a58-b98c-e0593c7f6e25" data-elfsight-app-lazy></div>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.querySelector('.md\\:hidden[role="button"]');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuBtn && mobileMenu) {
+                // Toggle menu visibility
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                // Auto-close menu on link click
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

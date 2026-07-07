@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Humaniser & Paraphraser | TheTaskBridge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #ef4444;
+            --bg: #0f172a; /* Slate 900 */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 20px; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Blobs for Glass Effect */
+        .bg-blobs {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            animation: blobAnim 8s infinite ease-in-out;
+            mix-blend-mode: multiply;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 400px; height: 400px; background: #8b5cf6; }
+        .blob-2 { top: 40%; right: -10%; width: 500px; height: 500px; background: #3b82f6; animation-delay: 2s; }
+        .blob-3 { bottom: -10%; left: 30%; width: 400px; height: 400px; background: #ec4899; animation-delay: 4s; }
+
+        @keyframes blobAnim {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+        }
+
+        /* Header & Nav */
+        header { 
+            margin-bottom: 30px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 0 10px;
+        }
+        h2 { margin: 0; font-weight: 700; letter-spacing: -0.5px; }
+        .back-link {
+            color: var(--text-main);
+            text-decoration: none;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+
+        /* Main Container */
+        .app-container { 
+            display: flex; 
+            flex-direction: column; /* Mobile first */
+            gap: 20px; 
+            flex: 1; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            width: 100%; 
+        }
+
+        @media (min-width: 992px) {
+            .app-container { flex-direction: row; overflow: hidden; }
+        }
+
+        /* Glass Panels */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .input-panel { flex: 1; display: flex; flex-direction: column; }
+        .output-panel { flex: 1.2; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+
+        /* Tabs */
+        .input-tabs { display: flex; gap: 10px; margin-bottom: 16px; }
+        .tab { 
+            padding: 10px 20px; 
+            background: rgba(0,0,0,0.2); 
+            border: 1px solid var(--glass-border); 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: 500; 
+            transition: 0.2s; 
+            color: var(--text-muted);
+        }
+        .tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Input Views */
+        .input-view { display: none; flex-direction: column; flex: 1; }
+        .input-view.active { display: flex; }
+        
+        textarea { 
+            flex: 1; 
+            width: 100%; 
+            background: rgba(0,0,0,0.2);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border); 
+            border-radius: 12px; 
+            padding: 16px; 
+            font-family: 'Inter', sans-serif; 
+            font-size: 15px; 
+            resize: none; 
+            margin-bottom: 16px; 
+            line-height: 1.6; 
+            min-height: 250px;
+            transition: border-color 0.2s;
+        }
+        textarea:focus { outline: none; border-color: var(--primary); }
+        textarea::placeholder { color: var(--text-muted); }
+
+        /* Upload Zone */
+        .upload-zone { 
+            flex: 1; 
+            border: 2px dashed rgba(255,255,255,0.2); 
+            border-radius: 12px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            background: rgba(0,0,0,0.1); 
+            margin-bottom: 16px; 
+            text-align: center; 
+            padding: 30px 20px; 
+            min-height: 200px;
+        }
+        .upload-zone input[type="file"] { margin-top: 15px; color: var(--text-main); }
+        .doc-info { margin-top: 15px; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 16px; border-radius: 8px; display: none; }
+
+        .page-selector { 
+            display: flex; align-items: center; flex-wrap: wrap; gap: 10px; 
+            margin-bottom: 16px; background: rgba(0,0,0,0.2); padding: 12px; 
+            border-radius: 10px; border: 1px solid var(--glass-border); 
+        }
+        .page-selector input { 
+            padding: 8px; background: transparent; color: #fff; 
+            border: 1px solid var(--glass-border); border-radius: 6px; 
+            width: 80px; text-align: center; 
+        }
+
+        /* Buttons */
+        .action-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        button.main-action { 
+            flex: 1; min-width: 200px;
+            background: var(--primary); color: white; border: none; 
+            padding: 14px; border-radius: 10px; font-size: 16px; 
+            font-weight: 600; cursor: pointer; transition: 0.2s; 
+        }
+        button.main-action:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        button.main-action:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; transform: none; }
+        
+        button.btn-reset { 
+            background: rgba(239, 68, 68, 0.1); color: #f87171; 
+            border: 1px solid rgba(239, 68, 68, 0.3); padding: 14px 20px; 
+            border-radius: 10px; font-size: 15px; font-weight: 600; 
+            cursor: pointer; transition: 0.2s; 
+        }
+        button.btn-reset:hover { background: rgba(239, 68, 68, 0.2); }
+
+        /* Output Cards */
+        .empty-state { text-align: center; color: var(--text-muted); margin-top: 50px; font-weight: 300; }
+
+        .result-card { 
+            background: rgba(0,0,0,0.2); 
+            border: 1px solid var(--glass-border); 
+            border-radius: 16px; 
+            padding: 20px; 
+            display: none; 
+            animation: slideIn 0.3s ease-out; 
+            border-left: 4px solid var(--primary); 
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card-header-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+        .card-header { font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+        .model-badge { background: rgba(59, 130, 246, 0.2); color: #60a5fa; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+        /* Reasoning Block */
+        details.reasoning-block { 
+            background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); 
+            border-radius: 10px; padding: 12px; margin-bottom: 16px; font-size: 13px; display: none; 
+        }
+        details.reasoning-block summary { cursor: pointer; font-weight: 600; color: var(--text-muted); outline: none; }
+        details.reasoning-block .thought-content { 
+            margin-top: 10px; color: #94a3b8; white-space: pre-wrap; 
+            border-top: 1px dashed var(--glass-border); padding-top: 10px; 
+        }
+
+        .card-content { font-size: 15px; line-height: 1.7; margin-bottom: 16px; white-space: pre-wrap; color: var(--text-main); }
+        
+        .card-actions { 
+            display: flex; gap: 10px; flex-wrap: wrap;
+            border-top: 1px solid var(--glass-border); padding-top: 16px; align-items: center; 
+        }
+
+        .btn-secondary { 
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); 
+            padding: 10px 16px; border-radius: 8px; cursor: pointer; 
+            font-weight: 500; color: var(--text-main); transition: 0.2s; 
+        }
+        .btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+
+        .citation-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; align-items: center; }
+        
+        .text-input, .select-input { 
+            padding: 10px 12px; border: 1px solid var(--glass-border); 
+            border-radius: 8px; background-color: rgba(0,0,0,0.3); 
+            font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-main); 
+        }
+        .text-input:focus, .select-input:focus { outline: none; border-color: var(--primary); }
+        .select-input option { background: var(--bg); color: #fff; }
+        
+        .loader { color: var(--text-muted); font-style: italic; }
+        
+        /* Blinking cursor for streaming */
+        .streaming-cursor::after { content: '▋'; animation: blink 1s step-start infinite; color: var(--primary); }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Custom Scrollbar for inner panels */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .citation-controls { margin-left: 0; width: 100%; justify-content: space-between; }
+            .citation-controls input, .citation-controls select, .citation-controls button { flex: 1; }
+            #btn-humanize { margin-left: 0; width: 100%; }
+            .card-actions button { flex: 1; text-align: center; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Glassmorphism Blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <header>
+        <h2>AI Document Pipeline</h2>
+        <a href="index.html" class="back-link">← Go Back Home</a>
+    </header>
+
+    <div class="app-container">
+        
+        <!-- LEFT PANEL -->
+        <div class="input-panel glass-panel">
+            <div class="input-tabs">
+                <div class="tab active" onclick="switchTab('paste')">Paste Text</div>
+                <div class="tab" onclick="switchTab('upload')">Upload PDF</div>
+            </div>
+            
+            <div id="view-paste" class="input-view active">
+                <textarea id="sourceText" placeholder="Paste your text here..."></textarea>
+            </div>
+
+            <div id="view-upload" class="input-view">
+                <div class="upload-zone">
+                    <p style="margin:0; color:#cbd5e1;">Drag & Drop or Select a PDF Document</p>
+                    <input type="file" id="pdfUpload" accept="application/pdf" onchange="handleFileUpload(event)">
+                    <div id="doc-info" class="doc-info"></div>
+                </div>
+                
+                <div class="page-selector">
+                    <label for="doc-page-input"><strong>Select Page:</strong></label>
+                    <input type="number" id="doc-page-input" min="1" max="1" value="1">
+                    <small id="page-limit-text" style="color: #94a3b8; margin-left:10px;">Upload PDF first</small>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="main-action" id="main-btn" onclick="startPipeline()">Paraphrase Output</button>
+                <button class="btn-reset" onclick="resetPipeline()" title="Clear all outputs and start over">🔄 Clear</button>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="output-panel glass-panel" id="pipelineContainer">
+            <div class="empty-state" id="emptyState">
+                Your generated content will appear here in a progressive timeline.
+            </div>
+
+            <!-- Stage 1 -->
+            <div class="result-card" id="card-paraphrase">
+                <div class="card-header-container">
+                    <div class="card-header">1. Paraphrased Output</div>
+                    <div class="model-badge">Nvidia Nemotron 3 Ultra</div>
+                </div>
+                <details class="reasoning-block" id="reasoning-container-paraphrase">
+                    <summary>🧠 View AI Thought Process <span class="loader" id="loader-reasoning-paraphrase"></span></summary>
+                    <div class="thought-content" id="reasoning-paraphrase"></div>
+                </details>
+                <div class="card-content" id="content-paraphrase"></div>
+                <div class="card-actions">
+                    <button class="btn-secondary" onclick="copyText('content-paraphrase', this)">📋 Copy</button>
+                    <button class="btn-secondary" onclick="runHumanize()" id="btn-humanize" style="margin-left: auto;">👤 Humanize</button>
+                </div>
+            </div>
+
+            <!-- Stage 2 -->
+            <div class="result-card" id="card-humanize" style="border-left-color: var(--success);">
+                <div class="card-header-container">
+                    <div class="card-header">2. Humanized Output</div>
+                    <div class="model-badge">Nvidia Nemotron 3 Ultra</div>
+                </div>
+                <details class="reasoning-block" id="reasoning-container-humanize">
+                    <summary>🧠 View AI Thought Process <span class="loader" id="loader-reasoning-humanize"></span></summary>
+                    <div class="thought-content" id="reasoning-humanize"></div>
+                </details>
+                <div class="card-content" id="content-humanize"></div>
+                <div class="card-actions">
+                    <button class="btn-secondary" onclick="copyText('content-humanize', this)">📋 Copy</button>
+                    
+                    <div class="citation-controls">
+                        <input type="text" id="cite-style" class="text-input" placeholder="Style (e.g. APA)" style="max-width: 120px;">
+                        <select id="cite-type" class="select-input">
+                            <option value="both">Both (In-text & Ref)</option>
+                            <option value="intext">In-text Only</option>
+                            <option value="outtext">Out-text Only</option>
+                        </select>
+                        <button class="btn-secondary" onclick="runCite()" id="btn-cite" style="border-color: var(--warning); color: var(--warning);">📚 Cite</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 3 -->
+            <div class="result-card" id="card-cite" style="border-left-color: var(--warning);">
+                <div class="card-header-container">
+                    <div class="card-header">3. Cited / Formatted Output</div>
+                    <div class="model-badge">Nvidia Nemotron 3 Ultra</div>
+                </div>
+                <details class="reasoning-block" id="reasoning-container-cite">
+                    <summary>🧠 View AI Thought Process <span class="loader" id="loader-reasoning-cite"></span></summary>
+                    <div class="thought-content" id="reasoning-cite"></div>
+                </details>
+                <div class="card-content" id="content-cite"></div>
+                <div class="card-actions">
+                    <button class="btn-secondary" onclick="copyText('content-cite', this)">📋 Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC (Untouched integration logic) -->
+    <script>
+        const OPENROUTER_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
+        const API_KEY = "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";
+        const MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"; 
+
+        let chatHistory = [];
+        let currentInputMode = 'paste'; 
+        let currentPdf = null;
+        let totalPdfPages = 0;
+
+        function switchTab(mode) {
+            currentInputMode = mode;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.input-view').forEach(v => v.classList.remove('active'));
+            document.getElementById(`view-${mode}`).classList.add('active');
+        }
+
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file || file.type !== "application/pdf") { alert("Please upload a valid PDF."); return; }
+            const fileReader = new FileReader();
+            fileReader.onload = async function() {
+                const typedarray = new Uint8Array(this.result);
+                currentPdf = await pdfjsLib.getDocument(typedarray).promise;
+                totalPdfPages = currentPdf.numPages;
+                const docInfoEl = document.getElementById('doc-info');
+                docInfoEl.innerText = `📄 ${file.name} (${totalPdfPages} Pages Loaded)`;
+                docInfoEl.style.display = 'inline-block';
+                const pageInput = document.getElementById('doc-page-input');
+                pageInput.max = totalPdfPages;
+                pageInput.value = 1;
+                document.getElementById('page-limit-text').innerText = `Max page: ${totalPdfPages}`;
+            };
+            fileReader.readAsArrayBuffer(file);
+        }
+
+        async function extractTextFromSinglePage(pageNum) {
+            if (!currentPdf) return "";
+            try {
+                const page = await currentPdf.getPage(pageNum);
+                const textContent = await page.getTextContent();
+                const textItems = textContent.items.map(item => item.str);
+                return textItems.join(" ");
+            } catch (error) {
+                console.error("Error reading PDF", error);
+                return "";
+            }
+        }
+
+        function resetPipeline() {
+            chatHistory = [];
+            document.getElementById("card-paraphrase").style.display = "none";
+            document.getElementById("card-humanize").style.display = "none";
+            document.getElementById("card-cite").style.display = "none";
+            document.getElementById("emptyState").style.display = "block";
+
+            ['paraphrase', 'humanize', 'cite'].forEach(stage => {
+                document.getElementById(`content-${stage}`).innerHTML = "";
+                document.getElementById(`reasoning-${stage}`).innerHTML = "";
+                document.getElementById(`reasoning-container-${stage}`).style.display = "none";
+            });
+
+            document.getElementById("btn-humanize").innerText = "👤 Humanize";
+            document.getElementById("btn-humanize").disabled = false;
+            document.getElementById("btn-cite").innerText = "📚 Cite";
+            document.getElementById("btn-cite").disabled = false;
+            document.getElementById("main-btn").innerText = "Paraphrase Output";
+            document.getElementById("main-btn").disabled = false;
+        }
+
+        async function callOpenRouterStream(messagesArray, stageId) {
+            const contentEl = document.getElementById(`content-${stageId}`);
+            const reasoningContainer = document.getElementById(`reasoning-container-${stageId}`);
+            const reasoningEl = document.getElementById(`reasoning-${stageId}`);
+            const reasoningLoader = document.getElementById(`loader-reasoning-${stageId}`);
+            
+            contentEl.innerHTML = '<span class="streaming-cursor"></span>';
+            reasoningEl.innerHTML = '';
+            reasoningContainer.style.display = 'none';
+            reasoningLoader.innerText = "(Thinking...)";
+            
+            let fullContent = "";
+            let fullReasoning = "";
+            
+            try {
+                const response = await fetch(OPENROUTER_ENDPOINT, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${API_KEY}`,
+                        "Content-Type": "application/json",
+                        "HTTP-Referer": window.location.href || "http://localhost",
+                        "X-Title": "AI Paraphraser App"
+                    },
+                    body: JSON.stringify({
+                        "model": MODEL,
+                        "messages": messagesArray, 
+                        "reasoning": {"enabled": true},
+                        "stream": true, 
+                        "max_tokens": 4000
+                    })
+                });
+
+                if (!response.ok) throw new Error(`API Error ${response.status}`);
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+                let buffer = "";
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    buffer += decoder.decode(value, { stream: true });
+                    let lines = buffer.split("\n");
+                    buffer = lines.pop(); 
+
+                    for (let line of lines) {
+                        line = line.trim();
+                        if (line.startsWith("data: ")) {
+                            if (line === "data: [DONE]") continue;
+                            try {
+                                const dataObj = JSON.parse(line.substring(6));
+                                const delta = dataObj.choices[0].delta;
+
+                                if (delta.reasoning) {
+                                    reasoningContainer.style.display = 'block';
+                                    fullReasoning += delta.reasoning;
+                                    reasoningEl.innerText = fullReasoning;
+                                }
+
+                                if (delta.content) {
+                                    reasoningLoader.innerText = ""; 
+                                    let textChunk = delta.content.replace(/\*/g, ''); 
+                                    fullContent += textChunk;
+                                    contentEl.innerHTML = fullContent + '<span class="streaming-cursor"></span>';
+                                }
+                            } catch (e) {}
+                        }
+                    }
+                }
+
+                contentEl.innerHTML = fullContent;
+                reasoningLoader.innerText = "";
+
+                return {
+                    role: "assistant",
+                    content: fullContent,
+                    reasoning_details: fullReasoning
+                };
+
+            } catch (error) {
+                console.error(error);
+                contentEl.innerHTML = `<span style="color:#ef4444; font-weight:bold;">Connection Aborted/Failed. Try again.</span>`;
+                return null;
+            }
+        }
+
+        async function startPipeline() {
+            let extractedText = "";
+            let pageInstructionContext = "";
+
+            if (currentInputMode === 'paste') {
+                extractedText = document.getElementById("sourceText").value.trim();
+                if (!extractedText) { alert("Please paste some text first."); return; }
+            } else if (currentInputMode === 'upload') {
+                if (!currentPdf) { alert("Please upload a PDF first."); return; }
+                const targetPage = parseInt(document.getElementById('doc-page-input').value);
+                if (targetPage < 1 || targetPage > totalPdfPages) { alert("Invalid page number."); return; }
+                
+                document.getElementById('main-btn').innerText = "Reading Page...";
+                document.getElementById('main-btn').disabled = true;
+                
+                extractedText = await extractTextFromSinglePage(targetPage);
+                pageInstructionContext = ` (Extracted from Page ${targetPage})`;
+                
+                document.getElementById('main-btn').innerText = "Paraphrase Output";
+                document.getElementById('main-btn').disabled = false;
+
+                if (!extractedText.trim()) { alert("No readable text found on that page."); return; }
+            }
+
+            document.getElementById("emptyState").style.display = "none";
+            document.getElementById("card-paraphrase").style.display = "block";
+            document.getElementById("card-humanize").style.display = "none";
+            document.getElementById("card-cite").style.display = "none";
+            
+            chatHistory = [
+                {
+                    "role": "system",
+                    "content": "You are an expert editing assistant. Always process the entire text provided. Do not summarize, shorten, or cut off the text."
+                },
+                {
+                    "role": "user",
+                    "content": `Paraphrase the following text${pageInstructionContext} to make it clearer and more concise, while retaining the original meaning entirely. Maintain the full length of the original document. Do NOT use any asterisks (*) for markdown formatting.\n\nTEXT:\n${extractedText}`
+                }
+            ];
+
+            const aiMessageObj = await callOpenRouterStream(chatHistory, "paraphrase");
+            if (aiMessageObj) chatHistory.push(aiMessageObj);
+        }
+
+        async function runHumanize() {
+            document.getElementById("card-humanize").style.display = "block";
+            document.getElementById("btn-humanize").innerText = "Humanizing...";
+            document.getElementById("btn-humanize").disabled = true;
+
+            chatHistory.push({
+                "role": "user",
+                "content": "Take the paraphrased text you just generated and humanize it. Rewrite it so it sounds natural and engaging. Do not summarize or shorten the text; maintain the full length. Do NOT use any asterisks (*) for markdown."
+            });
+
+            const aiMessageObj = await callOpenRouterStream(chatHistory, "humanize");
+            if (aiMessageObj) chatHistory.push(aiMessageObj);
+
+            document.getElementById("btn-humanize").innerText = "👤 Humanize";
+            document.getElementById("btn-humanize").disabled = false;
+        }
+
+        async function runCite() {
+            const citeType = document.getElementById("cite-type").value;
+            let citeStyle = document.getElementById("cite-style").value.trim();
+            
+            if (!citeStyle) {
+                citeStyle = "standard APA";
+            }
+
+            document.getElementById("card-cite").style.display = "block";
+            document.getElementById("btn-cite").innerText = "Citing...";
+            document.getElementById("btn-cite").disabled = true;
+
+            let citeInstruction = "";
+            if (citeType === "intext") {
+                citeInstruction = `Add strict ${citeStyle} formatted in-text citations. Do NOT generate a reference list/bibliography at the end.`;
+            } else if (citeType === "outtext") {
+                citeInstruction = `Generate a strict ${citeStyle} formatted Reference List (Bibliography) at the end. Do NOT add in-text citations into the body of the text.`;
+            } else {
+                citeInstruction = `Add strict ${citeStyle} formatted in-text citations AND generate a ${citeStyle} formatted Reference List (Bibliography) at the end.`;
+            }
+
+            chatHistory.push({
+                "role": "user",
+                "content": `Review the full humanized text you just generated. ${citeInstruction} You MUST use REAL, verifiable, and existing academic sources, books, journals, or articles that accurately support the factual claims in the text. Do NOT use placeholder names, fake citations, or hallucinated sources. Output the full body of text. Do NOT use asterisks (*).`
+            });
+
+            const aiMessageObj = await callOpenRouterStream(chatHistory, "cite");
+            if (aiMessageObj) chatHistory.push(aiMessageObj);
+
+            document.getElementById("btn-cite").innerText = "📚 Cite";
+            document.getElementById("btn-cite").disabled = false;
+        }
+
+        function copyText(elementId, btnElement) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = btnElement.innerText;
+                btnElement.innerText = "✅ Copied!";
+                setTimeout(() => { btnElement.innerText = originalText; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
